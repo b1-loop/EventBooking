@@ -60,6 +60,41 @@ datakontext och hur databasen och applikationen påverkar varandra.
 Trots detta gav projektet en tydlig förståelse för hur viktigt det är att ha en genomtänkt databasdesign innan 
 man börjar bygga applikationslogik, samt hur SQL och .NET samverkar i praktiska system
 
+1. Val av entiteter
+Strukturen är vald för att spegla en verklig evenemangsverksamhet med tydlig ansvarsfördelning:
+
+Venues & Events: Separerade för att återanvända arenadata för flera olika event.
+
+TicketTypes: Tillåter olika priskategorier (t.ex. VIP/Standard) per event.
+
+Orders & OrderItems: Möjliggör köp av flera olika biljetttyper i en och samma transaktion.
+
+EventAttendees: En ren kopplingstabell för att hantera incheckning och deltagarlistor.
+
+2. Normalisering
+Databasen följer 3NF (Tredje normalformen):
+
+Ingen redundans: Information om t.ex. en arena eller en kund lagras bara på ett ställe.
+
+Atomära värden: Data är uppdelad i minsta logiska beståndsdelar (t.ex. förnamn och efternamn separerade).
+
+Funktionella beroenden: Varje tabell beskriver endast sin egen huvudentitet, vilket förhindrar problem vid uppdateringar.
+
+3. Constraints (Dataskydd)
+För att garantera datakvalitet används strikta regler:
+
+Referentiell integritet: Foreign Keys (FK) ser till att man inte kan boka biljetter till event som inte finns.
+
+Unika värden: UNIQUE-constraints förhindrar dubbletter av e-post och ordernummer.
+
+Affärslogik via CHECK: Regler säkerställer att slutdatum är efter startdatum, att priser inte är negativa och att landskoder har rätt format.
+
+4. Nästa steg och förbättringar
+Säkerhet: Skapa vyer för att dölja känslig kunddata (t.ex. e-post) för vissa användare.
+
+Stored Procedures: Flytta komplex logik som orderläggning till databasen för att säkerställa att transaktioner alltid slutförs korrekt.
+
+Optimering: Lägga till index på de mest använda sökfälten för snabbare sökning i stora datamängder.
 
 
 
