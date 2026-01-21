@@ -77,7 +77,7 @@ internal class Program
             }
             catch (Exception ex)
             {
-                Console.WriteLine("❌ Fel: " + ex.Message);
+                Console.WriteLine("Fel: " + ex.Message);
                 Pause();
             }
         }
